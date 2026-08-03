@@ -16,9 +16,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QMainWindow, QMenu, QMenuBar,
-    QSizePolicy, QStackedWidget, QStatusBar, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QDockWidget, QListWidget, QListWidgetItem,
+    QMainWindow, QMenu, QMenuBar, QSizePolicy,
+    QStackedWidget, QStatusBar, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -58,6 +58,15 @@ class Ui_MainWindow(object):
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.projectExplorerDock = QDockWidget(MainWindow)
+        self.projectExplorerDock.setObjectName(u"projectExplorerDock")
+        self.dockWidgetContents = QWidget()
+        self.dockWidgetContents.setObjectName(u"dockWidgetContents")
+        self.projectExplorerList = QListWidget(self.dockWidgetContents)
+        self.projectExplorerList.setObjectName(u"projectExplorerList")
+        self.projectExplorerList.setGeometry(QRect(10, 40, 256, 192))
+        self.projectExplorerDock.setWidget(self.dockWidgetContents)
+        MainWindow.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, self.projectExplorerDock)
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menuFile.addAction(self.actionNewProject)
@@ -77,5 +86,6 @@ class Ui_MainWindow(object):
         self.actionSave.setText(QCoreApplication.translate("MainWindow", u"Save", None))
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
+        self.projectExplorerDock.setWindowTitle(QCoreApplication.translate("MainWindow", u"Project Explorer", None))
     # retranslateUi
 
