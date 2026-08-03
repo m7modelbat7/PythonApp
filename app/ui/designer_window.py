@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QMainWindow
 
+from ui.composer_page import ComposerPage
 from ui.generated.ui_main_window import Ui_MainWindow
 
 
@@ -12,13 +13,24 @@ class DesignerMainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
 
-        # Create the interface generated from main_window.ui.
+        # Build the visual structure created in Qt Designer.
         self.ui = Ui_MainWindow()
-
-        # Place the generated interface inside this real QMainWindow.
         self.ui.setupUi(self)
 
-        # Connect the Designer Exit action to QMainWindow.close().
+        # Create the existing Composer page.
+        self.composer_page = ComposerPage()
+
+        # Add the existing Python page to the stacked page container.
+        self.ui.contentStack.addWidget(
+            self.composer_page
+        )
+
+        # Tell the stacked widget to display ComposerPage.
+        self.ui.contentStack.setCurrentWidget(
+            self.composer_page
+        )
+
+        # Connect File -> Exit to the window close method.
         self.ui.actionExit.triggered.connect(
             self.close
         )
