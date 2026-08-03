@@ -1,0 +1,14 @@
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Requirements & dependency files (if you don't want them tracked)
+requirements.txt
+requirements-*.txt
+requirements/
+Pipfile
+Pipfile.lock
+poetry.lock
+
+
