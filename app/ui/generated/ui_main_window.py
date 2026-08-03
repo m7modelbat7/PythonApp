@@ -18,8 +18,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QDockWidget, QListWidget, QListWidgetItem,
     QMainWindow, QMenu, QMenuBar, QPlainTextEdit,
-    QSizePolicy, QStackedWidget, QStatusBar, QVBoxLayout,
-    QWidget)
+    QSizePolicy, QStackedWidget, QStatusBar, QToolBar,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -86,12 +86,15 @@ class Ui_MainWindow(object):
 
         self.outputDock.setWidget(self.dockWidgetContents_2)
         MainWindow.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, self.outputDock)
+        self.mainToolBar = QToolBar(MainWindow)
+        self.mainToolBar.setObjectName(u"mainToolBar")
+        MainWindow.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.mainToolBar)
 
         self.menubar.addAction(self.menuFile.menuAction())
-        self.menuFile.addAction(self.actionNewProject)
-        self.menuFile.addAction(self.actionOpenProject)
-        self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionExit)
+        self.mainToolBar.addAction(self.actionNewProject)
+        self.mainToolBar.addAction(self.actionOpenProject)
+        self.mainToolBar.addAction(self.actionSave)
 
         self.retranslateUi(MainWindow)
 
@@ -107,5 +110,6 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.projectExplorerDock.setWindowTitle(QCoreApplication.translate("MainWindow", u"Project Explorer", None))
         self.outputDock.setWindowTitle(QCoreApplication.translate("MainWindow", u"Output", None))
+        self.mainToolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"Main Toolbar", None))
     # retranslateUi
 
