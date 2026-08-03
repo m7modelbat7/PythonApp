@@ -24,6 +24,13 @@ class DesignerMainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+
+        # Display an initial message in the Output panel.
+        self.ui.outputConsole.setPlainText(
+            "Python Composer started successfully.\n"
+            "Output and execution logs will appear here."
+        )
+        
         # No project is open when the application starts.
         self.current_project_directory: Path | None = None
 
