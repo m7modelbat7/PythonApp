@@ -52,16 +52,11 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
-    <widget class="QListWidget" name="projectExplorerList">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>256</width>
-       <height>192</height>
-      </rect>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QListWidget" name="projectExplorerList"/>
+     </item>
+    </layout>
    </widget>
   </widget>
   <action name="actionNewProject">

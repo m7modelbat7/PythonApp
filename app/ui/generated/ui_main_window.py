@@ -62,9 +62,13 @@ class Ui_MainWindow(object):
         self.projectExplorerDock.setObjectName(u"projectExplorerDock")
         self.dockWidgetContents = QWidget()
         self.dockWidgetContents.setObjectName(u"dockWidgetContents")
+        self.verticalLayout_2 = QVBoxLayout(self.dockWidgetContents)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.projectExplorerList = QListWidget(self.dockWidgetContents)
         self.projectExplorerList.setObjectName(u"projectExplorerList")
-        self.projectExplorerList.setGeometry(QRect(10, 40, 256, 192))
+
+        self.verticalLayout_2.addWidget(self.projectExplorerList)
+
         self.projectExplorerDock.setWidget(self.dockWidgetContents)
         MainWindow.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, self.projectExplorerDock)
 
