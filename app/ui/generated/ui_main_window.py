@@ -17,8 +17,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QDockWidget, QListWidget, QListWidgetItem,
-    QMainWindow, QMenu, QMenuBar, QSizePolicy,
-    QStackedWidget, QStatusBar, QVBoxLayout, QWidget)
+    QMainWindow, QMenu, QMenuBar, QPlainTextEdit,
+    QSizePolicy, QStackedWidget, QStatusBar, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -71,6 +72,20 @@ class Ui_MainWindow(object):
 
         self.projectExplorerDock.setWidget(self.dockWidgetContents)
         MainWindow.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, self.projectExplorerDock)
+        self.outputDock = QDockWidget(MainWindow)
+        self.outputDock.setObjectName(u"outputDock")
+        self.dockWidgetContents_2 = QWidget()
+        self.dockWidgetContents_2.setObjectName(u"dockWidgetContents_2")
+        self.verticalLayout_3 = QVBoxLayout(self.dockWidgetContents_2)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.outputConsole = QPlainTextEdit(self.dockWidgetContents_2)
+        self.outputConsole.setObjectName(u"outputConsole")
+        self.outputConsole.setReadOnly(True)
+
+        self.verticalLayout_3.addWidget(self.outputConsole)
+
+        self.outputDock.setWidget(self.dockWidgetContents_2)
+        MainWindow.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, self.outputDock)
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menuFile.addAction(self.actionNewProject)
@@ -91,5 +106,6 @@ class Ui_MainWindow(object):
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.projectExplorerDock.setWindowTitle(QCoreApplication.translate("MainWindow", u"Project Explorer", None))
+        self.outputDock.setWindowTitle(QCoreApplication.translate("MainWindow", u"Output", None))
     # retranslateUi
 
