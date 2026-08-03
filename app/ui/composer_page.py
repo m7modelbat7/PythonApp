@@ -55,6 +55,10 @@ class ComposerPage(QWidget):
 
         splitter = QSplitter(Qt.Orientation.Horizontal)
 
+        
+        # Prevent either splitter panel from disappearing completely.
+        splitter.setChildrenCollapsible(False)
+
         self.code_editor = QTextEdit()
         self.code_editor.setPlaceholderText(
             "Write your Python service here...\n\n"
@@ -63,6 +67,10 @@ class ComposerPage(QWidget):
         )
 
         right_panel = QWidget()
+
+        # Prevent the settings panel from becoming too narrow.
+        right_panel.setMinimumWidth(320)
+        
         right_layout = QVBoxLayout(right_panel)
 
         form_layout = QFormLayout()
@@ -130,7 +138,15 @@ class ComposerPage(QWidget):
 
         splitter.setSizes([800, 400])
 
-        main_layout.addWidget(splitter)
+        # Keep approximately two-thirds of the width for the code editor
+        # and one-third for the settings panel when resizing.
+        splitter.setStretchFactor(0, 2)
+        splitter.setStretchFactor(1, 1)
+
+        main_layout.addWidget(
+            splitter,
+            stretch=1,
+        )
 
     def save_service(self) -> None:
         """
