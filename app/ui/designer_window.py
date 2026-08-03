@@ -30,7 +30,7 @@ class DesignerMainWindow(QMainWindow):
             "Python Composer started successfully.\n"
             "Output and execution logs will appear here."
         )
-        
+
         # No project is open when the application starts.
         self.current_project_directory: Path | None = None
 
@@ -153,6 +153,14 @@ class DesignerMainWindow(QMainWindow):
         self.load_project_into_explorer(
             project_directory
         )
+
+        # Add the successful operation to the Output panel.
+        self.ui.outputConsole.appendPlainText("")
+
+        self.ui.outputConsole.appendPlainText(
+            f"Project created: {project_directory}"
+        )
+
 
         self.ui.statusbar.showMessage(
             f"Project: {project_directory.name}"
