@@ -2,7 +2,7 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-from ui.main_window import MainWindow
+from ui.designer_window import DesignerMainWindow
 
 
 def main() -> None:
@@ -12,7 +12,7 @@ def main() -> None:
 
     app = QApplication(sys.argv)
 
-    window = MainWindow()
+    window = DesignerMainWindow()
     window.show()
 
     sys.exit(app.exec())
