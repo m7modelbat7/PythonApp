@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from PySide6.QtWidgets import (
+    QFileDialog,
     QInputDialog,
     QMainWindow,
     QMessageBox,
@@ -96,10 +97,14 @@ class DesignerMainWindow(QMainWindow):
             self.create_new_project
         )
 
+        self.ui.actionOpenProject.triggered.connect(
+            self.open_existing_project
+        )
+
         self.ui.actionSave.triggered.connect(
             self.composer_page.save_service
         )
-        
+
         self.ui.actionExit.triggered.connect(
             self.close
         )
@@ -179,6 +184,81 @@ class DesignerMainWindow(QMainWindow):
             ),
         )
 
+
+    def open_existing_project(self) -> None:
+        """
+        Ask the user to select an existing Composer project.
+        """
+
+        selected_directory = QFileDialog.getExistingDirectory(
+            self,
+            "Open Project",
+            str(self.project_manager.projects_directory),
+        )
+
+        # The user closed the dialog without selecting anything.
+        if not selected_directory:
+            return
+
+        try:
+            project_directory = (
+                self.project_manager.open_project(
+                    Path(selected_directory)
+                )
+            )
+
+        except FileNotFoundError as error:
+            QMessageBox.warning(
+                self,
+                "Project Not Found",
+                str(error),
+            )
+            return
+
+        except ValueError as error:
+            QMessageBox.warning(
+                self,
+                "Invalid Project",
+                str(error),
+            )
+            return
+
+        except OSError as error:
+            QMessageBox.critical(
+                self,
+                "Project Opening Failed",
+                (
+                    "The project could not be opened.\n\n"
+                    f"Reason: {error}"
+                ),
+            )
+            return
+
+        self.current_project_directory = project_directory
+
+        self.load_project_into_explorer(
+            project_directory
+        )
+
+        self.ui.outputConsole.appendPlainText("")
+
+        self.ui.outputConsole.appendPlainText(
+            f"Project opened: {project_directory}"
+        )
+
+        self.ui.statusbar.showMessage(
+            f"Project: {project_directory.name}"
+        )
+
+        QMessageBox.information(
+            self,
+            "Project Opened",
+            (
+                f"Project '{project_directory.name}' "
+                "was opened successfully."
+            ),
+        )
+    
     def load_project_into_explorer(
         self,
         project_directory: Path,

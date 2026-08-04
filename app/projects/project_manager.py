@@ -74,6 +74,75 @@ class ProjectManager:
 
         return project_directory
 
+    def open_project(
+    self,
+    project_directory: Path,
+) -> Path:
+        """
+        Validate an existing Composer project and return its path.
+
+        A valid project must:
+        - Exist
+        - Be a directory
+        - Contain a project.json file
+        - Contain a valid project name in project.json
+        """
+
+        project_directory = Path(
+            project_directory
+        ).resolve()
+
+        if not project_directory.exists():
+            raise FileNotFoundError(
+                f"Project directory does not exist: "
+                f"{project_directory}"
+            )
+
+        if not project_directory.is_dir():
+            raise ValueError(
+                "The selected path is not a directory."
+            )
+
+        project_file = (
+            project_directory / "project.json"
+        )
+
+        if not project_file.exists():
+            raise ValueError(
+                "The selected folder is not a valid "
+                "Python Composer project because "
+                "project.json was not found."
+            )
+
+        try:
+            with project_file.open(
+                "r",
+                encoding="utf-8",
+            ) as file:
+                project_information = json.load(file)
+
+        except json.JSONDecodeError as error:
+            raise ValueError(
+                "The project's project.json file "
+                "contains invalid JSON."
+            ) from error
+
+        project_name = project_information.get(
+            "name"
+        )
+
+        if (
+            not isinstance(project_name, str)
+            or not project_name.strip()
+        ):
+            raise ValueError(
+                "The project's project.json file "
+                "does not contain a valid project name."
+            )
+
+        return project_directory
+        
+
     def _validate_project_name(
         self,
         project_name: str,
