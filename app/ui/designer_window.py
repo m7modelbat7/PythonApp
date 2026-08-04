@@ -96,6 +96,10 @@ class DesignerMainWindow(QMainWindow):
             self.create_new_project
         )
 
+        self.ui.actionSave.triggered.connect(
+            self.composer_page.save_service
+        )
+        
         self.ui.actionExit.triggered.connect(
             self.close
         )
